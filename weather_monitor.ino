@@ -7,37 +7,30 @@
 #include<LiquidCrystal.h>
 #include <LiquidCrystal_I2C.h> 
 #include "DHT.h"       
-
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883 
 #define AIO_USERNAME    "adafruit_username"
 #define AIO_KEY         "adafruit_key"
 #define DHTTYPE DHT11   
 #define dht_dpin 0
-
 LiquidCrystal_I2C lcd(0x3F,16,2);
 DHT dht(dht_dpin, DHTTYPE);
 WiFiClient client;
-
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 Adafruit_MQTT_Publish Temperature = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/Temperature");
 Adafruit_MQTT_Publish Humidity = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/Humidity");
-
 const char* ssid     = "name";     
 const char* password = "password"; 
-
 byte tt[]={B00100,B01010,B01010,B01110,B01110,B11111,B11111,B01110};  
 byte hh[]={B00100,B000100,B01110,B10111,B10111,B111111,B01110,B00000};
 byte bb[]={B00100,B01110,B01110,B01110,B11111,B00000,B00100,B00000};
 byte cc[]={B01010,B01010,B11111,B11111,B11111,B01110,B00100,B00100};
 byte cc1[]={B00000,B00000,B00001,B00011,B10110,B11100,B01000,B00000};
-
 void setup()
 { 
   pinMode(A0, INPUT);
   lcd.begin();
   lcd.clear();
-  
   Serial.begin(9600);
   lcd.createChar(0,tt);
   lcd.createChar(1,bb);
@@ -45,20 +38,17 @@ void setup()
   lcd.createChar(3,hh);
   lcd.createChar(4,cc1);
   delay(10);
-  
   lcd.backlight();
   lcd.setCursor(4,0);
   lcd.print("VIGNESH B");
   lcd.setCursor(5,1);
   lcd.print("1816152");
   delay(3000);
-  
   for(int p=0;p<25;p++)
   {
     lcd.scrollDisplayLeft();
     delay(300);
   }
-  
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("WEATHER  MONITOR");
@@ -70,7 +60,6 @@ void setup()
   lcd.write((byte)3);
   delay(3000);
   lcd.clear();
-  
   dht.begin();
   Serial.begin(9600);
   delay(700);
@@ -85,7 +74,6 @@ void setup()
   }
   connect();
 }
-
 void connect()
 {
   Serial.print(F("Connecting to Adafruit IO... "));
@@ -107,7 +95,6 @@ void connect()
     Serial.println(F("Retrying connection..."));
     delay(10000);
   }
-  
   Serial.println(F("Adafruit IO Connected!"));
   lcd.clear();
   lcd.setCursor(0,0);
@@ -118,7 +105,6 @@ void connect()
   lcd.write((byte)2);
   delay(2000);
 }
-
 void loop() 
 {
      if(! mqtt.ping(3))
@@ -128,7 +114,6 @@ void loop()
   }
     float h = dht.readHumidity();
     float t = dht.readTemperature();         
-    
     lcd.clear();
     lcd.backlight();
     lcd.setCursor(0,0);
@@ -144,7 +129,6 @@ void loop()
     lcd.print(t);
     lcd.print((char)223);
     lcd.print("C");
-    
     if (! Temperature.publish(t))
     {                     
       Serial.println(F("Failed"));
