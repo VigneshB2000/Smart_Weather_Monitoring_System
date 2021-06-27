@@ -39,11 +39,6 @@ void setup()
   lcd.createChar(4,cc1);
   delay(10);
   lcd.backlight();
-  lcd.setCursor(4,0);
-  lcd.print("VIGNESH B");
-  lcd.setCursor(5,1);
-  lcd.print("1816152");
-  delay(3000);
   for(int p=0;p<25;p++)
   {
     lcd.scrollDisplayLeft();
