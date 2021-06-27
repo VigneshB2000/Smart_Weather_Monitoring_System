@@ -10,8 +10,8 @@
 
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883 
-#define AIO_USERNAME    "VigneshB"
-#define AIO_KEY         "aio_qoyg59LectCi6zT6FuT4H2hnLgbk"
+#define AIO_USERNAME    "adafruit_username"
+#define AIO_KEY         "adafruit_key"
 #define DHTTYPE DHT11   
 #define dht_dpin 0
 
@@ -23,8 +23,8 @@ Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO
 Adafruit_MQTT_Publish Temperature = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/Temperature");
 Adafruit_MQTT_Publish Humidity = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/Humidity");
 
-const char* ssid     = "E.D.I.T.H";     
-const char* password = "vicky008"; 
+const char* ssid     = "name";     
+const char* password = "password"; 
 
 byte tt[]={B00100,B01010,B01010,B01110,B01110,B11111,B11111,B01110};  
 byte hh[]={B00100,B000100,B01110,B10111,B10111,B111111,B01110,B00000};
